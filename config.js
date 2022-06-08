@@ -1,18 +1,23 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import {initializeApp} from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA2SCUA2VIEo2Oub0HMv802hrmKZDW69A4",
-    authDomain: "fir-demo-fab08.firebaseapp.com",
-    projectId: "fir-demo-fab08",
-    storageBucket: "fir-demo-fab08.appspot.com",
-    messagingSenderId: "854359173523",
-    appId: "1:854359173523:web:0a266fa3a1b6e1ebc36066"
+  apiKey: "AIzaSyDTOv05e0hzdRXixN07DGeV0wKGa7WjzKk",
+  authDomain: "fir-todo-e02c2.firebaseapp.com",
+  projectId: "fir-todo-e02c2",
+  storageBucket: "fir-todo-e02c2.appspot.com",
+  messagingSenderId: "740562378940",
+  appId: "1:740562378940:web:b6e25807ce92a868e870b9"
   };
+
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
 export { firebase };
+
+// export const app = initializeApp(firebaseConfig)
+// export const db = getFirestore(app);

@@ -3,38 +3,38 @@ import { View, TextInput, StyleSheet, Text, Pressable } from "react-native"
 import { firebase } from '../config';
 import { useNavigation } from '@react-navigation/native';
 
-const DetailsScreen = ({route}) => {
+const DetailsScreen = ({ route }) => {
     const todoRef = firebase.firestore().collection('todos');
-    const [textHeading, onChangeHeadingText] = useState(route.params.item.name);
+    const [textHeading, onChangeHeadingText] = useState(route.params.item.heading);
     const navigation = useNavigation();
 
     const updateTodo = () => {
         if (textHeading && textHeading.length > 0) {
             todoRef
-            .doc(route.params.item.id)
-            .update({
-                heading: textHeading,
-            }).then(() => {
-                navigation.navigate("Home")
-            }).catch((error) => {
-                alert(error.message)
-            })
+                .doc(route.params.item.id)
+                .update({
+                    heading: textHeading,
+                }).then(() => {
+                    navigation.navigate("Home")
+                }).catch((error) => {
+                    alert(error.message)
+                })
         }
-        
+
     }
 
     return (
         <View style={styles.container}>
-            <TextInput 
+            <TextInput
                 style={styles.textfield}
                 onChangeText={onChangeHeadingText}
                 value={textHeading}
                 placeholder="Update Todo"
             />
-            <Pressable 
+            <Pressable
                 style={styles.buttonUpdate}
-                onPress={() => {updateTodo()}}>
-                <Text>UPDATE USER</Text>
+                onPress={() => { updateTodo() }}>
+                <Text style={styles.buttonText}>Update item</Text>
             </Pressable>
         </View>
     )
@@ -43,8 +43,8 @@ const DetailsScreen = ({route}) => {
 const styles = StyleSheet.create({
     container: {
         marginTop: 80,
-        marginLeft:15,
-        marginRight:15,
+        marginLeft: 15,
+        marginRight: 15,
     },
     textfield: {
         marginBottom: 10,
@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#e0e0e0",
         borderRadius: 5
     },
+    buttonText: {
+        color: 'white',
+        fontSize: 18
+    },
     buttonUpdate: {
         marginTop: 25,
         alignItems: 'center',
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 10,
-        backgroundColor: '#0de065',
+        backgroundColor: '#788eec',
     },
 });
 

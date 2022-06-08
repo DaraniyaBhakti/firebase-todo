@@ -7,26 +7,27 @@ import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
     const [todos, setTodos] = useState([]);
     const todoRef = firebase.firestore().collection('todos');
+
     const [addData, setAddData] = useState('');
     const navigation = useNavigation();
 
     // fetch or read the data from firestore
     useEffect(() => {
         todoRef
-        .orderBy('createdAt', 'desc')
-        .onSnapshot( 
-            querySnapshot => {
-            const todos = []
-            querySnapshot.forEach((doc) => {
-                const {heading} = doc.data()
-                todos.push({
-                    id: doc.id,
-                    heading,
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(
+                querySnapshot => {
+                    const todos = []
+                    querySnapshot.forEach((doc) => {
+                        const { heading } = doc.data()
+                        todos.push({
+                            id: doc.id,
+                            heading,
+                        })
+                    })
+                    setTodos(todos)
+                    //console.log(users)
                 })
-            })
-            setTodos(todos)
-            //console.log(users)
-        })
     }, [])
 
     // delete a todo from firestore db
@@ -70,7 +71,7 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{ flex: 1 }}>
             <View style={styles.formContainer}>
                 <TextInput
                     style={styles.input}
@@ -89,25 +90,25 @@ const HomeScreen = () => {
                 style={{}}
                 data={todos}
                 numColumns={1}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                     <View>
                         <Pressable
-                        style={styles.container}
-                        onPress={() => navigation.navigate('Detail', {item})}
+                            style={styles.container}
+                            onPress={() => navigation.navigate('Detail', { item })}
                         >
-                            <FontAwesome name="trash-o" 
-                            color="red" 
-                            onPress={() => deleteTodo(item)} 
-                            style={styles.todoIcon} />
+                            <FontAwesome name="trash-o"
+                                color="red"
+                                onPress={() => deleteTodo(item)}
+                                style={styles.todoIcon} />
                             <View style={styles.innerContainer}>
                                 <Text style={styles.itemHeading}>
-                                    {item.heading[0].toUpperCase() + item.heading.slice(1)}
+                                    {!!item ? item.heading[0].toUpperCase() + item.heading.slice(1) : null}
                                 </Text>
-                            </View> 
-                            
+                            </View>
+
                         </Pressable>
                     </View>
-                    
+
 
                 )}
             />
@@ -120,27 +121,27 @@ const styles = StyleSheet.create({
         backgroundColor: '#e5e5e5',
         padding: 15,
         borderRadius: 15,
-        margin:5,
+        margin: 5,
         marginHorizontal: 10,
-        flexDirection:'row',
-        alignItems:'center'
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     innerContainer: {
         alignItems: 'center',
         flexDirection: 'column',
-        marginLeft:45,
+        marginLeft: 45,
     },
     itemHeading: {
         fontWeight: 'bold',
-        fontSize:18,
-        marginRight:22
+        fontSize: 18,
+        marginRight: 22
     },
     formContainer: {
         flexDirection: 'row',
         height: 80,
-        marginLeft:10,
+        marginLeft: 10,
         marginRight: 10,
-        marginTop:100
+        marginTop: 100
     },
     input: {
         height: 48,
@@ -163,11 +164,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20
     },
-    
-    todoIcon:{
-        marginTop:5,
-        fontSize:20,
-        marginLeft:14,
+
+    todoIcon: {
+        marginTop: 5,
+        fontSize: 20,
+        marginLeft: 14,
     },
 });
 
